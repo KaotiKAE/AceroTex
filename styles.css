@@ -299,7 +299,11 @@ ul { list-style: none; padding: 0; }
    16. Reach / locations
    ============================================================= */
 .reach { background: var(--bg); border-top: 1px solid var(--line); }
-.reach-grid { display: grid; gap: 1px; background: var(--line); border: 1px solid var(--line); }
+.reach-layout { display: grid; gap: clamp(1.4rem, 3vw, 2rem); }
+.reach-map { position: relative; overflow: hidden; background: #0e0f12; border: 1px solid var(--line); min-height: 300px; display: flex; align-items: center; justify-content: center; background-image: linear-gradient(rgba(255,255,255,.04) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,.04) 1px, transparent 1px); background-size: 42px 42px; }
+.reach-map::before { content: ""; position: absolute; inset: 0; background: radial-gradient(circle at 56% 48%, rgba(211,29,43,.18), transparent 60%); pointer-events: none; }
+.reach-map svg { position: relative; width: 100%; height: auto; display: block; }
+.reach-cards { display: grid; gap: 1px; background: var(--line); border: 1px solid var(--line); align-content: start; }
 .loc { position: relative; background: var(--bg); padding: clamp(1.6rem, 3.5vw, 2.4rem); display: grid; gap: .7rem; align-content: start; transition: background .45s var(--ease-out), box-shadow .45s var(--ease-out); }
 /* red bar that sweeps across the top on hover */
 .loc::after { content: ""; position: absolute; top: 0; left: 0; height: 3px; width: 100%; background: var(--accent); transform: scaleX(0); transform-origin: left; transition: transform .5s var(--ease-out); }
@@ -320,7 +324,7 @@ ul { list-style: none; padding: 0; }
   .loc, .loc::after, .loc h3, .loc-lines, .loc-link, .loc-tag { transition: none; }
   .loc:hover h3, .loc:hover .loc-lines, .loc:hover .loc-link { transform: none; }
 }
-@media (min-width: 860px) { .reach-grid { grid-template-columns: repeat(3, 1fr); } }
+@media (min-width: 960px) { .reach-layout { grid-template-columns: 1.15fr .85fr; align-items: stretch; } }
 
 /* =============================================================
    17. Contact
