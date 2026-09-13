@@ -74,13 +74,8 @@ ul { list-style: none; padding: 0; }
 .section-title { font-size: clamp(1.9rem, 4.6vw, 3.4rem); }
 
 /* =============================================================
-   4. Decorative structural grid
+   4. Layering
    ============================================================= */
-.grid-overlay { position: fixed; inset: 0; z-index: 0; pointer-events: none; max-width: var(--container); margin-inline: auto; padding-inline: var(--pad); display: flex; justify-content: space-between; }
-.grid-overlay span { width: 1px; height: 100%; background: linear-gradient(to bottom, transparent, var(--line) 12%, var(--line) 88%, transparent); opacity: .5; }
-.grid-overlay span:first-child, .grid-overlay span:last-child { opacity: .8; }
-@media (max-width: 720px) { .grid-overlay span:nth-child(2), .grid-overlay span:nth-child(4) { display: none; } }
-
 .nav, main, .footer, .splash, .cursor { position: relative; z-index: 2; }
 .splash { z-index: 9998; }
 .cursor { z-index: 9999; }
