@@ -377,6 +377,8 @@ ul { list-style: none; padding: 0; }
 .reveal { opacity: 1; transform: none; }
 html.js .reveal { opacity: 0; transform: translateY(34px); transition: opacity .7s var(--ease-out), transform .7s var(--ease-out); }
 html.js .reveal.is-visible { opacity: 1; transform: none; }
+/* keep Reach cards' hover (bg + shadow) smooth even with the reveal transition */
+html.js .loc { transition: background-color .45s var(--ease-out), box-shadow .45s var(--ease-out), opacity .7s var(--ease-out), transform .7s var(--ease-out); }
 .reveal[data-split] { opacity: 1 !important; transform: none !important; }
 
 /* =============================================================
