@@ -1,0 +1,26 @@
+# Netlify configuration for the AceroTex static site.
+# The site root is this folder (index.html at the top level).
+
+[build]
+  publish = "."
+
+# --- Caching (equivalent to the .htaccess, but for Netlify) ---
+
+# HTML always revalidated so updates show immediately after deploy.
+[[headers]]
+  for = "/*.html"
+  [headers.values]
+    Cache-Control = "no-cache"
+
+# Images cached long (they change rarely; new files get new names).
+[[headers]]
+  for = "/assets/img/*"
+  [headers.values]
+    Cache-Control = "public, max-age=2592000"
+
+# Minimal security headers.
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "strict-origin-when-cross-origin"

@@ -1,0 +1,9 @@
+# OS / editor junk
+.DS_Store
+Thumbs.db
+desktop.ini
+*.log
+
+# local dev only (not part of the deployable site)
+tools/
+assets/photos/source/
