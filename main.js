@@ -172,24 +172,37 @@
     var note = $("[data-form-note]");
     var c = data.contact || {};
     var to = c.email || "jcantu@redblackeg.com";
+    var endpoint = data.formEndpoint || "";
+
+    var get = function (n) { var f = form.elements[n]; return f ? String(f.value || "").trim() : ""; };
+
+    var mailtoFallback = function (name, company, email, type, message) {
+      var subject = "Quote request — " + (company || name || "New project") + " (" + (type || "Project") + ")";
+      var body = "Name: " + name + "\nCompany: " + company + "\nEmail: " + email +
+        "\nProject type: " + type + "\n\nScope & location:\n" + message + "\n\n— Sent from acerotex website";
+      window.location.href = "mailto:" + to + "?subject=" + encodeURIComponent(subject) + "&body=" + encodeURIComponent(body);
+    };
+
     form.addEventListener("submit", function (e) {
       e.preventDefault();
       if (!form.reportValidity()) return;
-      var get = function (n) { var f = form.elements[n]; return f ? f.value.trim() : ""; };
+      if (get("website")) return; // honeypot: silently drop bots
       var name = get("name"), company = get("company"), email = get("email"), type = get("type"), message = get("message");
-      var subject = "Quote request — " + (company || name || "New project") + " (" + (type || "Project") + ")";
-      var body =
-        "Name: " + name + "\n" +
-        "Company: " + company + "\n" +
-        "Email: " + email + "\n" +
-        "Project type: " + type + "\n\n" +
-        "Scope & location:\n" + message + "\n\n" +
-        "— Sent from acerotex website";
-      form.classList.add("is-sent");
-      if (note) note.hidden = false;
-      window.location.href = "mailto:" + to +
-        "?subject=" + encodeURIComponent(subject) +
-        "&body=" + encodeURIComponent(body);
+
+      // No database endpoint configured yet → open the visitor's email client.
+      if (!endpoint) { form.classList.add("is-sent"); if (note) note.hidden = false; mailtoFallback(name, company, email, type, message); return; }
+
+      // Send the submission to the Google Sheet (via Apps Script Web App).
+      var btn = form.querySelector(".btn-submit"); if (btn) btn.disabled = true;
+      var payload = new URLSearchParams({ name: name, company: company, email: email, type: type, message: message, source: "acerotex.com" });
+      fetch(endpoint, { method: "POST", mode: "no-cors", body: payload })
+        .then(function () {
+          form.classList.add("is-sent");
+          if (note) { note.textContent = "Thanks — your request was sent. We'll get back to you shortly."; note.hidden = false; }
+          form.reset();
+        })
+        .catch(function () { mailtoFallback(name, company, email, type, message); })
+        .finally(function () { if (btn) btn.disabled = false; });
     });
   }
 
