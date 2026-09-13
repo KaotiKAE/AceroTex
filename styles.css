@@ -154,7 +154,8 @@ ul { list-style: none; padding: 0; }
   linear-gradient(180deg, rgba(11,11,13,.45) 0%, rgba(11,11,13,.15) 30%, rgba(11,11,13,.7) 78%, rgba(11,11,13,.96) 100%),
   linear-gradient(90deg, rgba(11,11,13,.78) 0%, rgba(11,11,13,.2) 55%, transparent 100%); }
 .hero-inner { position: relative; z-index: 2; }
-.hero-logo { width: clamp(220px, 33vw, 430px); height: auto; margin-bottom: 1.5rem; }
+.hero-logo-wrap { margin: 0 0 1.7rem; line-height: 0; }
+.hero-logo { width: clamp(280px, 50vw, 620px); height: auto; display: block; }
 .hero-kicker { color: rgba(255,255,255,.8); }
 .hero-kicker .idx { border-color: rgba(255,255,255,.32); }
 .hero-title { font-size: clamp(2.3rem, 6vw, 5rem); font-weight: 900; line-height: 1.0; letter-spacing: -0.03em; max-width: 20ch; margin-bottom: 1.4rem; color: #fff; }
