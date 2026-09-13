@@ -101,7 +101,8 @@ ul { list-style: none; padding: 0; }
   position: fixed; inset: 0; cursor: pointer;
   display: grid; place-items: center;
   background: #0e0f12;
-  transition: opacity .8s var(--ease-out), clip-path .9s var(--ease-out);
+  /* the inner content leaves first, then the panel lifts away like a curtain */
+  transition: opacity .7s var(--ease-out) .35s, clip-path .95s var(--ease-in) .3s;
 }
 .welcome::before { /* faint red vignette for depth */
   content: ""; position: absolute; inset: 0; pointer-events: none;
@@ -114,6 +115,8 @@ ul { list-style: none; padding: 0; }
   text-align: center; padding: 2rem;
   animation: welcomeIn 1s var(--ease-out) both;
 }
+/* on exit, the content rises and fades before the panel lifts */
+.welcome.is-out .welcome-inner { animation: welcomeOut .5s var(--ease-in) forwards; }
 .welcome-kicker {
   margin: 0; font-family: var(--mono);
   font-size: .78rem; letter-spacing: .34em; text-transform: uppercase;
@@ -128,13 +131,19 @@ ul { list-style: none; padding: 0; }
   border: 1px solid rgba(255,255,255,.32);
   padding: .9rem 1.8rem; border-radius: 2px;
   transition: border-color .35s var(--ease-out), background-color .35s var(--ease-out), color .35s var(--ease-out);
-  animation: welcomePulse 2.6s var(--ease-out) infinite;
+  /* always-on smooth motion: a gentle float paired with a soft red glow */
+  animation: welcomeFloat 3.4s ease-in-out infinite, welcomePulse 3.4s ease-in-out infinite;
 }
 .welcome-btn:hover, .welcome-btn:focus-visible {
   border-color: var(--accent); background: var(--accent); color: #fff; outline: none;
 }
 @keyframes welcomeIn { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: none; } }
-@keyframes welcomePulse { 0%, 100% { box-shadow: 0 0 0 0 rgba(211,29,43,0); } 50% { box-shadow: 0 0 0 7px rgba(211,29,43,.13); } }
+@keyframes welcomeFloat { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-7px); } }
+@keyframes welcomePulse { 0%, 100% { box-shadow: 0 0 0 0 rgba(211,29,43,0); } 50% { box-shadow: 0 0 0 8px rgba(211,29,43,.14); } }
+/* the page settles up into place as the curtain lifts */
+@keyframes welcomeOut { to { opacity: 0; transform: translateY(-26px) scale(.96); } }
+@keyframes pageRise { from { transform: translateY(24px); } to { transform: none; } }
+html.is-entered main { animation: pageRise .9s var(--ease-out); }
 /* lock scroll behind the gate until the visitor enters */
 html.is-gated, html.is-gated body { overflow: hidden; }
 /* without JS the gate can't be dismissed — skip it entirely */
@@ -439,7 +448,8 @@ html.js .loc { transition: background-color .45s var(--ease-out), box-shadow .45
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   .marquee-track { animation: none !important; }
-  .welcome-btn, .welcome-inner { animation: none; }
+  .welcome-btn, .welcome-inner, .welcome.is-out .welcome-inner, html.is-entered main { animation: none !important; }
+  .welcome { transition: opacity .3s linear !important; }
   .reveal { transition-duration: .01ms; }
 }
 

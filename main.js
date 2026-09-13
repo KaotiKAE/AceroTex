@@ -20,9 +20,10 @@
       if (done) return;
       done = true;
       gate.classList.add("is-out");
+      root.classList.add("is-entered"); // triggers the page rise-in
       root.classList.remove("is-gated");
       document.removeEventListener("keydown", onKey, true);
-      setTimeout(function () { if (gate.parentNode) gate.parentNode.removeChild(gate); }, 950);
+      setTimeout(function () { if (gate.parentNode) gate.parentNode.removeChild(gate); }, 1400);
     };
     var onKey = function (e) {
       // Any real key press enters; leave Tab for keyboard focus navigation.
