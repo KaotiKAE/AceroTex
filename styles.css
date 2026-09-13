@@ -325,6 +325,19 @@ ul { list-style: none; padding: 0; }
   .loc:hover h3, .loc:hover .loc-lines, .loc:hover .loc-link { transform: none; }
 }
 @media (min-width: 960px) { .reach-layout { grid-template-columns: 1.15fr .85fr; align-items: stretch; } }
+/* Reach section on dark — matches the map background */
+.reach { background: #0e0f12; border-top-color: rgba(255,255,255,.10); }
+.reach .kicker { color: rgba(255,255,255,.72); }
+.reach .kicker .idx { border-color: rgba(255,255,255,.30); }
+.reach .section-title { color: #f4f4f2; }
+.reach-map { border-color: rgba(255,255,255,.12); }
+.reach-cards { background: rgba(255,255,255,.12); border-color: rgba(255,255,255,.12); }
+.reach .loc { background: #14151a; }
+.reach .loc h3 { color: #f4f4f2; }
+.reach .loc-lines { color: rgba(255,255,255,.70); }
+.reach .loc-link { color: #fff; }
+.reach .loc-link-mute { color: rgba(255,255,255,.50); }
+@media (hover: hover) { .reach .loc:hover { background: #1a1c22; box-shadow: 0 22px 45px rgba(0,0,0,.35); } }
 
 /* =============================================================
    17. Contact
