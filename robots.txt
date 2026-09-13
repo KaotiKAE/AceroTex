@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://acerotex.com/sitemap.xml
