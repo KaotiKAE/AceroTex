@@ -77,8 +77,8 @@ ul { list-style: none; padding: 0; }
 /* =============================================================
    4. Layering
    ============================================================= */
-.nav, main, .footer, .splash, .cursor { position: relative; z-index: 2; }
-.splash { z-index: 9998; }
+.nav, main, .footer, .welcome, .cursor { position: relative; z-index: 2; }
+.welcome { z-index: 9998; }
 .cursor { z-index: 9999; }
 
 /* =============================================================
@@ -95,16 +95,50 @@ ul { list-style: none; padding: 0; }
 @media (hover: none), (pointer: coarse) { .cursor { display: none; } }
 
 /* =============================================================
-   6. Splash
+   6. Welcome gate (click to enter)
    ============================================================= */
-.splash { position: fixed; inset: 0; background: var(--bg); display: grid; place-items: center; transition: opacity .7s var(--ease-out), clip-path .8s var(--ease-out); animation: splashSafety .01s 4.5s forwards; }
-.splash.is-out { opacity: 0; pointer-events: none; clip-path: inset(0 0 100% 0); }
-@keyframes splashSafety { to { opacity: 0; pointer-events: none; clip-path: inset(0 0 100% 0); } }
-.splash-inner { display: grid; justify-items: center; gap: 1.4rem; }
-.splash-logo { width: clamp(200px, 42vw, 300px); height: auto; }
-.splash-bar { width: 160px; height: 3px; background: var(--line); overflow: hidden; }
-.splash-bar i { display: block; height: 100%; width: 100%; background: var(--accent); transform-origin: left; animation: splashBar 1.6s var(--ease-out) infinite; }
-@keyframes splashBar { 0% { transform: scaleX(0); } 60% { transform: scaleX(1); } 100% { transform: scaleX(1); opacity: 0; } }
+.welcome {
+  position: fixed; inset: 0; cursor: pointer;
+  display: grid; place-items: center;
+  background: #0e0f12;
+  transition: opacity .8s var(--ease-out), clip-path .9s var(--ease-out);
+}
+.welcome::before { /* faint red vignette for depth */
+  content: ""; position: absolute; inset: 0; pointer-events: none;
+  background: radial-gradient(120% 90% at 50% 42%, rgba(211,29,43,.12), transparent 60%);
+}
+.welcome.is-out { opacity: 0; pointer-events: none; clip-path: inset(0 0 100% 0); }
+.welcome-inner {
+  position: relative; z-index: 1;
+  display: grid; justify-items: center; gap: 1.7rem;
+  text-align: center; padding: 2rem;
+  animation: welcomeIn 1s var(--ease-out) both;
+}
+.welcome-kicker {
+  margin: 0; font-family: var(--mono);
+  font-size: .78rem; letter-spacing: .34em; text-transform: uppercase;
+  color: rgba(244,244,242,.55);
+}
+.welcome-logo { width: clamp(230px, 46vw, 380px); height: auto; }
+.welcome-btn {
+  margin-top: .5rem;
+  font-family: var(--mono);
+  font-size: .8rem; letter-spacing: .2em; text-transform: uppercase;
+  color: #f4f4f2; background: transparent;
+  border: 1px solid rgba(255,255,255,.32);
+  padding: .9rem 1.8rem; border-radius: 2px;
+  transition: border-color .35s var(--ease-out), background-color .35s var(--ease-out), color .35s var(--ease-out);
+  animation: welcomePulse 2.6s var(--ease-out) infinite;
+}
+.welcome-btn:hover, .welcome-btn:focus-visible {
+  border-color: var(--accent); background: var(--accent); color: #fff; outline: none;
+}
+@keyframes welcomeIn { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: none; } }
+@keyframes welcomePulse { 0%, 100% { box-shadow: 0 0 0 0 rgba(211,29,43,0); } 50% { box-shadow: 0 0 0 7px rgba(211,29,43,.13); } }
+/* lock scroll behind the gate until the visitor enters */
+html.is-gated, html.is-gated body { overflow: hidden; }
+/* without JS the gate can't be dismissed — skip it entirely */
+html:not(.js) .welcome { display: none; }
 
 /* =============================================================
    7. Nav
@@ -405,7 +439,7 @@ html.js .loc { transition: background-color .45s var(--ease-out), box-shadow .45
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   .marquee-track { animation: none !important; }
-  .splash-bar i { animation: none; }
+  .welcome-btn, .welcome-inner { animation: none; }
   .reveal { transition-duration: .01ms; }
 }
 

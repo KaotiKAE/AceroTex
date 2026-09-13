@@ -9,14 +9,34 @@
   var $$ = function (sel, scope) { return Array.prototype.slice.call((scope || document).querySelectorAll(sel)); };
   function safe(fn, name) { try { fn(); } catch (e) { console.warn("[" + name + "]", e); } }
 
-  /* ---------- Splash (double safety) ---------- */
+  /* ---------- Welcome gate (click to enter) ---------- */
   function initSplash() {
-    var splash = $("[data-splash]");
-    if (!splash) return;
-    var hide = function () { splash.classList.add("is-out"); };
-    if (document.readyState === "complete") setTimeout(hide, 500);
-    else window.addEventListener("load", function () { setTimeout(hide, 350); });
-    setTimeout(hide, 3600); // safety net (CSS also hides at 4.5s)
+    var gate = $("[data-welcome]");
+    if (!gate) return;
+    var root = document.documentElement;
+    root.classList.add("is-gated"); // lock scroll behind the gate
+    var done = false;
+    var enter = function () {
+      if (done) return;
+      done = true;
+      gate.classList.add("is-out");
+      root.classList.remove("is-gated");
+      document.removeEventListener("keydown", onKey, true);
+      setTimeout(function () { if (gate.parentNode) gate.parentNode.removeChild(gate); }, 950);
+    };
+    var onKey = function (e) {
+      // Any real key press enters; leave Tab for keyboard focus navigation.
+      if (["Tab", "Shift", "Control", "Alt", "Meta", "CapsLock"].indexOf(e.key) !== -1) return;
+      e.preventDefault();
+      enter();
+    };
+    gate.addEventListener("click", enter);
+    document.addEventListener("keydown", onKey, true);
+    // Move focus to the prompt so keyboard/space works and the CTA reads out.
+    var btn = $("[data-welcome-continue]", gate);
+    if (btn) { try { btn.focus({ preventScroll: true }); } catch (e) { btn.focus(); } }
+    // Safety: never trap a visitor if something goes wrong — free scroll after 20s.
+    setTimeout(function () { root.classList.remove("is-gated"); }, 20000);
   }
 
   /* ---------- Nav: solid on scroll + mobile menu ---------- */
