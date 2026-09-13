@@ -163,7 +163,7 @@ ul { list-style: none; padding: 0; }
 .hero-sub { max-width: 56ch; color: rgba(255,255,255,.82); font-size: clamp(1rem, 1.6vw, 1.16rem); margin-bottom: 2.2rem; }
 .hero-actions { display: flex; flex-wrap: wrap; gap: .9rem; }
 .hero .btn-ghost { border-color: rgba(255,255,255,.5); color: #fff; }
-.hero .btn-ghost:hover { border-color: #fff; background: #fff; color: var(--bg); }
+.hero .btn-ghost:hover { border-color: #fff; background: #fff; color: var(--ink); }
 .hero-cue { position: absolute; z-index: 2; left: 50%; transform: translateX(-50%); bottom: clamp(1.4rem, 3vw, 2.4rem); display: flex; flex-direction: column; align-items: center; gap: .6rem; font-family: var(--mono); font-size: .64rem; letter-spacing: .26em; text-transform: uppercase; color: rgba(255,255,255,.75); }
 .hero-cue i { width: 1px; height: 34px; background: rgba(255,255,255,.5); position: relative; overflow: hidden; }
 .hero-cue i::after { content: ""; position: absolute; inset: 0; background: #fff; animation: heroCue 2s var(--ease-out) infinite; }
