@@ -297,12 +297,26 @@ ul { list-style: none; padding: 0; }
    ============================================================= */
 .reach { background: var(--bg); border-top: 1px solid var(--line); }
 .reach-grid { display: grid; gap: 1px; background: var(--line); border: 1px solid var(--line); }
-.loc { background: var(--bg); padding: clamp(1.6rem, 3.5vw, 2.4rem); display: grid; gap: .7rem; align-content: start; }
-.loc-tag { font-family: var(--mono); font-size: .68rem; letter-spacing: .16em; text-transform: uppercase; color: var(--accent); }
+.loc { position: relative; background: var(--bg); padding: clamp(1.6rem, 3.5vw, 2.4rem); display: grid; gap: .7rem; align-content: start; transition: background .45s var(--ease-out), box-shadow .45s var(--ease-out); }
+/* red bar that sweeps across the top on hover */
+.loc::after { content: ""; position: absolute; top: 0; left: 0; height: 3px; width: 100%; background: var(--accent); transform: scaleX(0); transform-origin: left; transition: transform .5s var(--ease-out); }
+.loc-tag { font-family: var(--mono); font-size: .68rem; letter-spacing: .16em; text-transform: uppercase; color: var(--accent); transition: letter-spacing .5s var(--ease-out); }
 .loc h3 { font-size: clamp(1.2rem, 2.4vw, 1.6rem); font-weight: 800; }
 .loc-lines { color: var(--ink-2); font-size: .95rem; line-height: 1.6; }
 .loc-link { font-family: var(--mono); font-size: .88rem; color: var(--ink); border-bottom: 2px solid var(--accent); padding-bottom: 2px; width: max-content; }
 .loc-link-mute { color: var(--ink-3); border-bottom-color: var(--line-2); }
+/* smooth slide of the content */
+.loc h3, .loc-lines, .loc-link { transition: transform .5s var(--ease-out); }
+@media (hover: hover) {
+  .loc:hover { background: var(--bg-2); box-shadow: 0 22px 45px rgba(18,19,22,.10); z-index: 1; }
+  .loc:hover::after { transform: scaleX(1); }
+  .loc:hover .loc-tag { letter-spacing: .22em; }
+  .loc:hover h3, .loc:hover .loc-lines, .loc:hover .loc-link { transform: translateX(8px); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .loc, .loc::after, .loc h3, .loc-lines, .loc-link, .loc-tag { transition: none; }
+  .loc:hover h3, .loc:hover .loc-lines, .loc:hover .loc-link { transform: none; }
+}
 @media (min-width: 860px) { .reach-grid { grid-template-columns: repeat(3, 1fr); } }
 
 /* =============================================================
