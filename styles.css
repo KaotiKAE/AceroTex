@@ -392,8 +392,8 @@ html:not(.js) .welcome { display: none; }
 .contact-title { font-size: clamp(1.9rem, 4.4vw, 3.2rem); margin-bottom: 1.2rem; }
 .contact-lead { color: var(--ink-2); max-width: 46ch; margin-bottom: 2.2rem; }
 .contact-direct { display: grid; gap: 0; border-top: 1px solid var(--line); }
-.contact-direct li { display: flex; gap: 1.2rem; padding: .9rem 0; border-bottom: 1px solid var(--line); font-family: var(--mono); font-size: .95rem; }
-.contact-direct span { color: var(--ink-3); font-size: .68rem; letter-spacing: .14em; text-transform: uppercase; min-width: 68px; align-self: center; }
+.contact-direct li { display: flex; align-items: center; gap: 1.2rem; padding: .9rem 0; border-bottom: 1px solid var(--line); font-family: var(--sans); font-size: .98rem; }
+.contact-direct span { font-family: var(--mono); color: var(--ink-3); font-size: .68rem; letter-spacing: .14em; text-transform: uppercase; min-width: 68px; align-self: center; }
 .contact-direct a { color: var(--ink); border-bottom: 1px solid transparent; transition: border-color .2s; }
 .contact-direct a:hover { border-bottom-color: var(--accent); }
 
@@ -401,7 +401,8 @@ html:not(.js) .welcome { display: none; }
 .field { display: grid; gap: .5rem; }
 .field-wide { grid-column: 1 / -1; }
 .field label { font-family: var(--mono); font-size: .68rem; letter-spacing: .12em; text-transform: uppercase; color: var(--ink-3); }
-.field input, .field select, .field textarea { font-family: var(--sans); font-size: 1rem; color: var(--ink); background: var(--bg); border: 1px solid var(--line-2); padding: .85rem .9rem; width: 100%; transition: border-color .2s var(--ease-out); }
+.field input, .field select, .field textarea, .field option { font-family: var(--sans); font-size: 1rem; color: var(--ink); background: var(--bg); border: 1px solid var(--line-2); padding: .85rem .9rem; width: 100%; transition: border-color .2s var(--ease-out); }
+.field option { border: 0; padding: 0; }
 .field textarea { resize: vertical; }
 .field input:focus, .field select:focus, .field textarea:focus { outline: none; border-color: var(--accent); }
 .field select { appearance: none; -webkit-appearance: none; cursor: pointer; }
@@ -409,7 +410,7 @@ html:not(.js) .welcome { display: none; }
 .btn-check { width: 20px; height: 20px; fill: none; stroke: #fff; stroke-width: 2.4; stroke-linecap: square; stroke-linejoin: miter; stroke-dasharray: 30; stroke-dashoffset: 30; opacity: 0; }
 .contact-form.is-sent .btn-check { opacity: 1; animation: drawCheck .5s var(--ease-out) forwards; }
 @keyframes drawCheck { to { stroke-dashoffset: 0; } }
-.form-note { grid-column: 1 / -1; font-family: var(--mono); font-size: .8rem; color: var(--ink-2); }
+.form-note { grid-column: 1 / -1; font-family: var(--sans); font-size: .85rem; color: var(--ink-2); }
 .form-note a { color: var(--accent); }
 @media (min-width: 960px) { .contact-grid { grid-template-columns: 0.9fr 1.1fr; } .contact-head { position: sticky; top: calc(var(--nav-h) + 2rem); align-self: start; } }
 
